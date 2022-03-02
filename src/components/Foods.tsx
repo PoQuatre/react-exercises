@@ -1,16 +1,26 @@
 import { Component } from "react";
 
-const foods = ["rice", "pasta", "chocolate", "hamburger"];
+interface State {
+  foods: string[];
+}
 
-export class Foods extends Component {
+export class Foods extends Component<unknown, State> {
+  constructor(props: unknown) {
+    super(props);
+
+    this.state = {
+      foods: ["rice", "pasta", "chocolate", "hamburger"],
+    };
+  }
+
   render() {
     return (
       <>
-        {foods.length === 0 ? (
+        {this.state.foods.length === 0 ? (
           <p>The list is empty</p>
         ) : (
           <ul>
-            {foods.map((food) => (
+            {this.state.foods.map((food) => (
               <li key={food}>{food}</li>
             ))}
           </ul>

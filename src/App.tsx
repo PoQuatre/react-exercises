@@ -1,5 +1,7 @@
+import { Title } from "./components/Title";
+
 function App() {
-  return <h1>Hello World!</h1>;
+  return <Title title="Test Title" message="Test Message" />;
 }
 
 export default App;

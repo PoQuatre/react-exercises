@@ -29,9 +29,8 @@ const products: Product[] = [
   },
 ];
 
-const getProductById = (id: number): Product | null => {
-  const res = products.filter((product) => product.id === id);
-  return res.length === 1 ? res[0] : null;
+const getProductById = (id: number): Product | undefined => {
+  return products.find((product) => product.id === id);
 };
 
 interface State {
@@ -54,6 +53,32 @@ export class ShoppingCart extends Component<unknown, State> {
     };
   }
 
+  incrementQuantity = (id: number) => {
+    this.setState({
+      cartProducts: this.state.cartProducts.map((product) =>
+        product.id !== id
+          ? product
+          : {
+              id,
+              quantity: product.quantity + 1,
+            }
+      ),
+    });
+  };
+
+  decrementQuantity = (id: number) => {
+    this.setState({
+      cartProducts: this.state.cartProducts.map((product) =>
+        product.id !== id
+          ? product
+          : {
+              id,
+              quantity: product.quantity - 1,
+            }
+      ),
+    });
+  };
+
   render() {
     return (
       <>
@@ -75,6 +100,8 @@ export class ShoppingCart extends Component<unknown, State> {
                 <CartProduct
                   product={getProductById(cartProduct.id)}
                   quantity={cartProduct.quantity}
+                  onIncrement={this.incrementQuantity}
+                  onDecrement={this.decrementQuantity}
                 />
               ))}
             </tbody>
